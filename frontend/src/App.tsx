@@ -1,14 +1,18 @@
-
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import Login from './screens/Login'
+import Signup from './screens/Signup'
+import Home from './screens/Home'
 
 function App() {
-  
-
   return (
-    <>
-      <h1 className="text-3xl font-bold underline text-center">
-        Hello world!
-      </h1>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
