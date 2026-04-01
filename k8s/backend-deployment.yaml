@@ -21,6 +21,6 @@ spec:
             - name: PORT
               value: "5000"
             - name: MONGO_URI
-              value: "mongodb://localhost:27017/argocd-login"
+              value: "mongodb://mongo:27017/argocd-login"
             - name: JWT_SECRET
               value: "supersecretkey123"
