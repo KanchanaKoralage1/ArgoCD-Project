@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: kanchana20/argocd-backend:785c8ef
+          image: kanchana20/argocd-backend:b58fa35
           ports:
             - containerPort: 5000
           env:

@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: kanchana20/argocd-frontend:785c8ef
+          image: kanchana20/argocd-frontend:b58fa35
           ports:
             - containerPort: 80
