@@ -1,0 +1,21 @@
+backend:
+  image: kanchana20/argocd-backend
+  tag: v1
+  replicas: 2
+  port: 5000
+  mongoUri: mongodb://mongo:27017/argocd-login
+  jwtSecret: supersecretkey123
+
+frontend:
+  image: kanchana20/argocd-frontend
+  tag: v3
+  replicas: 1
+  port: 80
+  nodePort: 30080
+
+mongo:
+  image: mongo
+  tag: "6"
+  replicas: 1
+  port: 27017
+  storage: 1Gi
