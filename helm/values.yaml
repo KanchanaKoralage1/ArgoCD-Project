@@ -1,13 +1,13 @@
 backend:
   image: kanchana20/argocd-backend
-  tag: 8b3d42d
+  tag: 0a6485a
   replicas: 2
   port: 5000
   mongoUri: mongodb://mongo:27017/argocd-login
   jwtSecret: supersecretkey123
 frontend:
   image: kanchana20/argocd-frontend
-  tag: 8b3d42d
+  tag: 0a6485a
   replicas: 1
   port: 80
   nodePort: 
