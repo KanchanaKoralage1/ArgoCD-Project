@@ -10,7 +10,7 @@ frontend:
   tag: 0a6485a
   replicas: 1
   port: 80
-  nodePort: 
+  nodePort: 30081
 mongo:
   image: mongo
   tag: "6"
