@@ -1,10 +1,6 @@
 backend:
   image: kanchana20/argocd-backend
-<<<<<<< HEAD
-  tag: v2
-=======
   tag: 672d8a2
->>>>>>> f53bf29b4809ba5645e06f9be66ec841771d4db1
   replicas: 2
   port: 5000
   mongoUri: mongodb://mongo:27017/argocd-login
