@@ -1,0 +1,6 @@
+# grafana-values.yaml
+service:
+  type: NodePort
+  nodePort: 30030
+
+adminPassword: admin123

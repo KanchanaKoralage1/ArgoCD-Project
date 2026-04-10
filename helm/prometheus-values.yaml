@@ -1,0 +1,15 @@
+server:
+  service:
+    type: NodePort
+    nodePort: 30090
+
+alertmanager:
+  enabled: false
+
+prometheus-pushgateway:
+  enabled: false
+
+extraScrapeConfigs: |
+  - job_name: 'backend'
+    static_configs:
+      - targets: ['backend-service.default.svc.cluster.local:5000']
