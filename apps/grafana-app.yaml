@@ -1,0 +1,91 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://grafana.github.io/helm-charts
+    chart: grafana
+    targetRevision: 10.5.15
+    helm:
+      valuesObject:
+        service:
+          type: NodePort
+          nodePort: 30030
+        adminPassword: admin123
+        persistence:
+          enabled: true
+          size: 1Gi
+        securityContext:
+          runAsUser: 472
+          runAsGroup: 472
+          fsGroup: 472
+        initChownData:
+          enabled: false
+        datasources:
+          datasources.yaml:
+            apiVersion: 1
+            datasources:
+              - name: prometheus
+                type: prometheus
+                uid: prometheus
+                url: http://prometheus-server.monitoring.svc.cluster.local
+                isDefault: true
+        dashboardProviders:
+          dashboardproviders.yaml:
+            apiVersion: 1
+            providers:
+              - name: default
+                folder: ArgoCD Project
+                type: file
+                options:
+                  path: /var/lib/grafana/dashboards/default
+        dashboards:
+          default:
+            argocd-project:
+              json: |
+                {
+                  "title": "argocd-project",
+                  "uid": "adj8grx",
+                  "schemaVersion": 42,
+                  "version": 7,
+                  "time": {"from": "now-1h", "to": "now"},
+                  "timezone": "browser",
+                  "panels": [
+                    {
+                      "id": 3,
+                      "title": "Average Response Time",
+                      "type": "timeseries",
+                      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+                      "datasource": {"type": "prometheus", "uid": "prometheus"},
+                      "targets": [{"editorMode": "code", "expr": "rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m])", "legendFormat": "__auto", "range": true, "refId": "A"}]
+                    },
+                    {
+                      "id": 1,
+                      "title": "HTTP Request Rate",
+                      "type": "timeseries",
+                      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+                      "datasource": {"type": "prometheus", "uid": "prometheus"},
+                      "targets": [{"editorMode": "code", "expr": "rate(http_requests_total[5m])", "legendFormat": "__auto", "range": true, "refId": "A"}]
+                    },
+                    {
+                      "id": 2,
+                      "title": "Backend Memory Usage",
+                      "type": "timeseries",
+                      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+                      "datasource": {"type": "prometheus", "uid": "prometheus"},
+                      "targets": [{"editorMode": "code", "expr": "process_resident_memory_bytes", "legendFormat": "__auto", "range": true, "refId": "A"}]
+                    }
+                  ]
+                }
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
