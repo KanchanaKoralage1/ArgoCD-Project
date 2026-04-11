@@ -8,6 +8,14 @@ persistence:
   enabled: true
   size: 1Gi
 
+securityContext:
+  runAsUser: 472
+  runAsGroup: 472
+  fsGroup: 472
+
+initChownData:
+  enabled: false
+  
 datasources:
   datasources.yaml:
     apiVersion: 1
